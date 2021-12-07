@@ -35,17 +35,10 @@ void GameClient::connectServer() {
             printf("Server closed remote socket\n");
             break;
         } else {
-            //system("clear");
-            // Hier dann send list read del quit
+            // Hier dann Mail usw
             gameState.setState(buffer);
-            gameState.printBoard();
 
-            if (gameState.wonGame() != ' ') {
-                printf("\nGame over, %c won\n", gameState.wonGame());
-                break;
-            }
-
-            printf("\n (Enter 0-8) >> ");
+            printf("\n What do you want to send? >> ");
             if (fgets(buffer, BUF, stdin) != NULL) {
                 int bufferSize = strlen(buffer);
                 // remove new-line signs from string at the end
@@ -60,8 +53,7 @@ void GameClient::connectServer() {
                     break;
 
                 // SEND DATA
-                buffer[1] = '\0';
-                if ((send(create_socket, buffer, 2, 0)) == -1) {
+                if ((send(create_socket, buffer, bufferSize, 0)) == -1) {
                     perror("send error");
                     break;
                 }

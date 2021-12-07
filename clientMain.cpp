@@ -12,9 +12,6 @@ int main(int argc, char *argv[]) {
     strcpy(ipString, argv[1]);
     int port = atoi(argv[2]);
 
-    //printf("%s\n", ipString);
-    //printf("%d\n", port);
-
     GameClient client;
     if (!client.start(ipString, port)) {
         perror("start client");

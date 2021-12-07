@@ -4,31 +4,31 @@
 GameState::GameState()
 {
 
-	for(int n=0; n<9; ++n)
+	/* for(int n=0; n<9; ++n)
 		gameBoard[n] = '_';
 	activePlayer = 'X';
-	won = ' ';
+	won = ' '; */
 	std::cout << "Mail Server startet\n";
 }
 
 void GameState::printBoard()
 {
-	for(int n=0; n<9; ++n)
+	/*for(int n=0; n<9; ++n)
 	{
 		if(n%3 == 0)
 			std::cout << std::endl;
 		std::cout << " " << gameBoard[n] << " ";
-	}
+	} */
 }
 
 bool GameState::setState(std::string msg)
 {
-	for(int n=0; n<9; ++n)
-		gameBoard[n] = msg[n];
-	activePlayer = msg[9];
-	won = msg[10];	
-	return true;
+    printf("%s\n", msg.c_str());
+    return true;
 }
+/*
+printf("%s\n", msg.c_str());
+return true; */
 
 std::string GameState::getMsg()
 {
@@ -39,7 +39,7 @@ std::string GameState::getMsg()
 	msg += won;
 	return msg;
 }
-
+/*
 void GameState::checkWin()
 {
 	if(gameBoard[0] == activePlayer && gameBoard[4] == activePlayer && gameBoard[8] == activePlayer)
@@ -65,17 +65,43 @@ void GameState::checkWin()
 			return;
 		}
 	}
-}
+} */
 
 void GameState::playField(int index)
 {
 	if(index >= 0 && index <= 8 && gameBoard[index] == '_')
 	{
 		gameBoard[index] = activePlayer;
-		checkWin();	
+		//checkWin();
 		activePlayer = activePlayer == 'X' ? 'O' : 'X';	
 	}
 }
+
+
+std::vector <std::string> evaluateResult(std::string msg) {
+    std::istringstream str(msg);
+    // TZEst  asd
+    std::vector <std::string> result;
+    std::string line;
+    std::getline(str, line);
+
+    std::stringstream lineStream(line);
+    std::string cell;
+
+    while (std::getline(lineStream, cell, '\n')) {
+        result.push_back(cell);
+    }
+    // This checks for a trailing comma with no data after it.
+    if (!lineStream && cell.empty()) {
+        // If there was a trailing comma then add an empty element.
+        result.push_back("");
+    }
+   //  printf("HHHHHHHH        %d     \n", result)
+    return result;
+}
+
+
+
 
 char GameState::wonGame()
 {

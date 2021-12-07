@@ -21,12 +21,12 @@ bool GameServer::start(int port)
 		perror("set socket options - reusePort");
 		return false;
 	}
-	
+
 	memset(&address, 0, sizeof(address));
 	address.sin_family = AF_INET; //adress familiy ipv4
 	address.sin_addr.s_addr = INADDR_ANY; // = 0
 	address.sin_port = htons(port);
-	
+
 	if (bind(create_socket, (struct sockaddr*)&address, sizeof(address)) == -1)
 	{
 		perror("bind error");
@@ -42,11 +42,11 @@ void GameServer::listenForClients()
 		perror("listen error");
 		return;
 	}
-	
+
 	while (!abortRequested)
 	{
 		printf("Waiting for connections...\n");
-		
+
 		// ACCEPTS CONNECTION SETUP
 		addrlen = sizeof(struct sockaddr_in);
 		if ((new_socket = accept(create_socket, (struct sockaddr *)&cliaddress, &addrlen)) == -1)
@@ -61,15 +61,15 @@ void GameServer::listenForClients()
 			}
 			break;
 		}
-	
-		
+
+
 		// START CLIENT
 		printf("Client connected from %s:%d...\n", inet_ntoa(cliaddress.sin_addr), ntohs(cliaddress.sin_port));
 		gameState = GameState();
 		clientCommunication(&new_socket);
 		new_socket = -1;
 	}
-	
+
 	abort();
 }
 
@@ -78,7 +78,7 @@ void GameServer::clientCommunication(int* current_socket)
 	char buffer[BUF];
 	int size;
 	sendGameState(current_socket);
-	
+
 	do
 	{
 		// RECEIVE
@@ -100,14 +100,15 @@ void GameServer::clientCommunication(int* current_socket)
 			printf("Client closed remote socket\n"); // ignore error
 			break;
 		}
-		
+
 		printf("Message received: %s\n", buffer); // ignore error
 
-		gameState.playField(buffer[0]-48);
+        gameState.evaluateResult(std::string(buffer));
+// TZEst  asd
 		sendGameState(current_socket);
-		
+
 	} while (!abortRequested);
-	
+
 	// closes/frees the descriptor if not already
 	if (*current_socket != -1)
 	{
@@ -120,7 +121,7 @@ void GameServer::clientCommunication(int* current_socket)
 			perror("close new_socket");
 		}
 		*current_socket = -1;
-	}	
+	}
 }
 
 void GameServer::sendGameState(int* socket)

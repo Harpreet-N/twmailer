@@ -1,6 +1,7 @@
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
-
+#include <sstream>
+#include <vector>
 #include <string>
 
 class GameState
@@ -14,18 +15,20 @@ class GameState
 	GameState();
 	
 	//CLIENT
-	bool setState(std::string msg);
+	//bool setMailStage(std::string msg);
 	void printBoard();
 	char wonGame();
 
 
     // Client Mail
-    //bool setState(std::string msg);
+   bool setState(std::string msg);
 	
 	//SERVER
 	std::string getMsg();
 	void playField(int index);
-	void checkWin();
-};
+	// void evaluateResult(std::string msg);
+    std::vector <std::string> evaluateResult(std::string);
+	// void checkWin();
+}; // TZEst  asd
 
 #endif
