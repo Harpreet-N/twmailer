@@ -42,17 +42,25 @@ std::string MailState::getMsg()
 
 std::string MailState::getMethodName(std::vector<std::string>  msg, std::string directory) {
 
-    fileio = FileIO(directory);
+    printf("Test cvo:\n");
+   // FileIO* fileio = new FileIO(directory);
 
-    std::string evaluteMethod = msg[0].c_str();
-    std::string user = msg[1].c_str();
+    printf("Test nac:\n");
 
-    fileio->setUser(user);
+
+    std::string evaluteMethod = msg[0];
+   // std::string user = msg[1].c_str();
+
+    printf("Test: %s\n", evaluteMethod.c_str());
+  //  printf("Test user: %s\n", user.c_str());
+
+
+//    fileio->setUser(user);
 
     char firstCharacter = evaluteMethod[0];
     switch (firstCharacter) {
         case 'S':
-            fileio->saveMsg(msg[4].c_str(),  msg[3].c_str());
+            // fileio->saveMsg(msg[4].c_str(),  msg[3].c_str());
             return "SEND";
             break;
         case 'L':
