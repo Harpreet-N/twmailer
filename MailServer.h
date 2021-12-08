@@ -12,8 +12,9 @@
 #include <signal.h>
 #include <thread>
 #include <cstddef>
-#include "GameState.h"
+#include "MailState.h"
 #include <iostream>
+#include <vector>
 
 #define BUF 1024
 #define PORT 6543
@@ -22,7 +23,7 @@
 class GameServer
 {
 	private:
-	GameState gameState;
+	MailState mailState;
 	int create_socket = -1;
 	bool abortRequested = false;
 	socklen_t addrlen;
@@ -32,9 +33,9 @@ class GameServer
 	public:
 	GameServer();
 	bool start(int);
-	void listenForClients();
+	void listenForClients(std::string);
 	void abort();
-	void clientCommunication(int* parameterSocket);
+	void clientCommunication(int* parameterSocket, std::string);
 	void sendGameState(int* socket);
 };
 

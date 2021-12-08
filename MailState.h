@@ -3,8 +3,10 @@
 #include <sstream>
 #include <vector>
 #include <string>
+#include "string.h"
+#include "FileIO.h"
 
-class GameState
+class MailState
 {
 	private:
 	char gameBoard[9];
@@ -12,7 +14,7 @@ class GameState
 	char won;
 	
 	public:
-	GameState();
+	MailState();
 	
 	//CLIENT
 	//bool setMailStage(std::string msg);
@@ -25,9 +27,11 @@ class GameState
 	
 	//SERVER
 	std::string getMsg();
+	std::string getMethodName(std::vector <std::string>, std::string);
 	void playField(int index);
 	// void evaluateResult(std::string msg);
     std::vector <std::string> evaluateResult(std::string);
+    void setDirectory(std::string);
 	// void checkWin();
 }; // TZEst  asd
 

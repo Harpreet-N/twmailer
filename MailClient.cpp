@@ -1,4 +1,4 @@
-#include "GameClient.h"
+#include "MailClient.h"
 
 GameClient::GameClient() {}
 
@@ -36,7 +36,7 @@ void GameClient::connectServer() {
             break;
         } else {
             // Hier dann Mail usw
-            gameState.setState(buffer);
+            mailState.setState(buffer);
 
             printf("\n What do you want to send? >> ");
             if (fgets(buffer, BUF, stdin) != NULL) {

@@ -1,5 +1,5 @@
 #include <iostream>
-#include "GameServer.h"
+#include "MailServer.h"
 
 void signalHandler(int);
 GameServer server;
@@ -7,14 +7,14 @@ GameServer server;
 int main(int argc, char *argv[])
 {
 	
-	/*if (argc != 3)
+	if (argc != 3)
 	{
 		perror("Error");
 		return 1;
 	} 
 
 	char directoryString[255] = {'\0'};
-	strcpy(directoryString, argv[2]); */
+	strcpy(directoryString, argv[2]);
 
 	int port = atoi(argv[1]);
 
@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 		perror("start server");
 		return EXIT_FAILURE;
 	}
-	server.listenForClients();
+	server.listenForClients(directoryString);
 	
 	return 0;
 }

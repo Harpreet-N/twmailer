@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "GameState.h"
+#include "MailState.h"
 
 #define BUF 1024
 #define PORT 6543
@@ -17,7 +17,7 @@
 class GameClient
 {
 	private:
-	GameState gameState;
+	MailState mailState;
 	int create_socket;
 	char buffer[BUF];
 	struct sockaddr_in address;
