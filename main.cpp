@@ -2,7 +2,7 @@
 #include "MailServer.h"
 
 void signalHandler(int);
-GameServer server;
+MailServer server;
 
 int main(int argc, char *argv[])
 {

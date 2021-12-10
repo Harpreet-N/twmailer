@@ -1,8 +1,8 @@
 #include "MailServer.h"
 
-GameServer::GameServer(){}
+MailServer::MailServer(){}
 
-bool GameServer::start(int port)
+bool MailServer::start(int port)
 {
 	int reuseValue = 1;
 
@@ -35,7 +35,7 @@ bool GameServer::start(int port)
 	return true;
 }
 
-void GameServer::listenForClients(std::string directory)
+void MailServer::listenForClients(std::string directory)
 {
 	if (listen(create_socket, 5) == -1)
 	{
@@ -62,7 +62,6 @@ void GameServer::listenForClients(std::string directory)
 			break;
 		}
 
-
 		// START CLIENT
 		printf("Client connected from %s:%d...\n", inet_ntoa(cliaddress.sin_addr), ntohs(cliaddress.sin_port));
 		mailState = MailState();
@@ -73,11 +72,11 @@ void GameServer::listenForClients(std::string directory)
 	abort();
 }
 
-void GameServer::clientCommunication(int* current_socket, std::string directory)
+void MailServer::clientCommunication(int* current_socket, std::string directory)
 {
 	char buffer[BUF];
 	int size;
-	sendGameState(current_socket);
+	sendMailState(current_socket);
 
 	do
 	{
@@ -107,16 +106,12 @@ void GameServer::clientCommunication(int* current_socket, std::string directory)
 
         mailState.getMethodName(result, directory);
 
-        //printf("Testt\n");
-        //printf("Testt  %s \n", result[0].c_str());
-
         for(int i = 0; i < (int) result.size(); i++)
         {
             std::cout << result[i] << std::endl;
         }
 
-
-		sendGameState(current_socket);
+        sendMailState(current_socket);
 
 	} while (!abortRequested);
 
@@ -135,7 +130,7 @@ void GameServer::clientCommunication(int* current_socket, std::string directory)
 	}
 }
 
-void GameServer::sendGameState(int* socket)
+void MailServer::sendMailState(int* socket)
 {
 	std::string msg = mailState.getMsg();
 	std::cout << "Sending: " << msg << std::endl;
@@ -145,7 +140,7 @@ void GameServer::sendGameState(int* socket)
 	}
 }
 
-void GameServer::abort()
+void MailServer::abort()
 {
 	abortRequested = true;
 	if (new_socket != -1)

@@ -12,13 +12,12 @@ int main(int argc, char *argv[]) {
     strcpy(ipString, argv[1]);
     int port = atoi(argv[2]);
 
-    GameClient client;
+    MailClient client;
     if (!client.start(ipString, port)) {
         perror("start client");
         return EXIT_FAILURE;
     }
 
     client.connectServer();
-
     return EXIT_SUCCESS;
 }

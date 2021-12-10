@@ -1,5 +1,5 @@
-#ifndef GAMESERVER_H
-#define GAMESERVER_H
+#ifndef MAILERVER_H
+#define MAILSERVER_H
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -20,7 +20,7 @@
 #define PORT 6543
 #define MSGSIZE 11
 
-class GameServer
+class MailServer
 {
 	private:
 	MailState mailState;
@@ -31,12 +31,12 @@ class GameServer
 	int new_socket = -1;
 	
 	public:
-	GameServer();
+	MailServer();
 	bool start(int);
 	void listenForClients(std::string);
 	void abort();
 	void clientCommunication(int* parameterSocket, std::string);
-	void sendGameState(int* socket);
+	void sendMailState(int* socket);
 };
 
 #endif

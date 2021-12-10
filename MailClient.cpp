@@ -1,14 +1,13 @@
 #include "MailClient.h"
 
-GameClient::GameClient() {}
+MailClient::MailClient() {}
 
-bool GameClient::start(char *ip, int port) {
+bool MailClient::start(char *ip, int port) {
     if ((create_socket = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
         perror("Socket error");
         return false;
     }
 
-    // Ip und port übergeben
     memset(&address, 0, sizeof(address));
     address.sin_family = AF_INET;
     address.sin_port = htons(port);
@@ -17,7 +16,9 @@ bool GameClient::start(char *ip, int port) {
     return true;
 }
 
-void GameClient::connectServer() {
+std::string readInput();
+
+void MailClient::connectServer() {
     if (connect(create_socket, (struct sockaddr *) &address, sizeof(address)) == -1) {
         perror("Connect error - no server available");
         exit(EXIT_FAILURE);
@@ -35,25 +36,33 @@ void GameClient::connectServer() {
             printf("Server closed remote socket\n");
             break;
         } else {
-            // Hier dann Mail usw
             mailState.setState(buffer);
 
             printf("\n What do you want to send? >> ");
             if (fgets(buffer, BUF, stdin) != NULL) {
-                int bufferSize = strlen(buffer);
-                // remove new-line signs from string at the end
-                if (buffer[bufferSize - 2] == '\r' && buffer[bufferSize - 1] == '\n') {
-                    bufferSize -= 2;
-                    buffer[size] = 0;
-                } else if (buffer[bufferSize - 1] == '\n') {
-                    --bufferSize;
-                    buffer[bufferSize] = 0;
+                std::vector<std::string> stringVector;
+                std::ostringstream output;
+
+                char bufferChar[255] = {'\0'};
+                std::string bufferString = strcpy(bufferChar, buffer);
+
+                do{
+                    std::getline(std::cin, bufferString);
+                    stringVector.push_back(bufferString);
+                } while (bufferString.at(0) != '.');
+
+                for(std::string line : stringVector){
+                    output << line << std::endl;
                 }
-                if (strcmp(buffer, "quit") == 0)
-                    break;
+
+                int bufferSize = bufferString.size();
 
                 // SEND DATA
-                if ((send(create_socket, buffer, bufferSize, 0)) == -1) {
+
+                std::string sendData = output.str();
+                const char * c = sendData.c_str();
+
+                if ((send(create_socket, c, bufferSize, 0)) == -1) {
                     perror("send error");
                     break;
                 }

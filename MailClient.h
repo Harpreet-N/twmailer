@@ -1,5 +1,5 @@
-#ifndef GAMECLIENT_H
-#define GAMECLIENT_H
+#ifndef MAILCLIENT_H
+#define MAILCLIENT_H
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -10,11 +10,15 @@
 #include <stdio.h>
 #include <string.h>
 #include "MailState.h"
+#include <iostream>
+#include <string>
+#include <vector>
+#include <sstream>
 
 #define BUF 1024
 #define PORT 6543
 
-class GameClient
+class MailClient
 {
 	private:
 	MailState mailState;
@@ -24,7 +28,7 @@ class GameClient
 	int size;
 	
 	public:
-	GameClient();
+    MailClient();
 	bool start(char*,int);
 	void connectServer();
 };
