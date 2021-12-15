@@ -1,5 +1,5 @@
-#ifndef MAILCLIENT_H
-#define MAILCLIENT_H
+#ifndef __MAILCLIENT_H
+#define __MAILCLIENT_H
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -9,27 +9,28 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "MailState.h"
-#include <iostream>
 #include <string>
+#include <iostream>
 #include <vector>
-#include <sstream>
+#include <sstream>  
 
 #define BUF 1024
-#define PORT 6543
 
 class MailClient
 {
 	private:
-	MailState mailState;
 	int create_socket;
 	char buffer[BUF];
 	struct sockaddr_in address;
 	int size;
+    int port;
+	std::string ipAddress;
+    std::vector<std::string> readUserInput();
 	
 	public:
-    MailClient();
-	bool start(char*,int);
+	MailClient(std::string ip, int port);
+    ~MailClient();
+	bool start();
 	void connectServer();
 };
 

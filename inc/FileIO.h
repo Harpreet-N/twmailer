@@ -5,6 +5,7 @@
 #include <string>
 #include <string.h>
 #include <dirent.h>
+#include <sys/stat.h>
 #include <vector>
 #include <algorithm>
 #include <fstream>
@@ -25,7 +26,7 @@ private:
 public:
     FileIO(std::string rootDir);
     ~FileIO();
-    void setUser(std::string username);
+    bool setUser(std::string username);
     std::string readDirFiles();
     void saveMsg(std::string msg, std::string subject);
     std::string readMsg(int id);

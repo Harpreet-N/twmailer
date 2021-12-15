@@ -1,16 +1,11 @@
-all: client file server
+all: twmailer_client twmailer_server
 
-client: clientMain.cpp
-	g++ -std=c++14 -Wall -Werror -o client clientMain.cpp MailClient.cpp MailClient.h MailState.cpp MailState.h MsgContainer.cpp MsgContainer.h FileIO.h FileIO.cpp
+twmailer_client: main_client.cpp
+	g++ -std=c++14 -Wall -Werror -Iinc -o twmailer_client main_client.cpp inc/MailClient.h src/MailClient.cpp inc/FileIO.h src/FileIO.cpp inc/MsgContainer.h src/MsgContainer.cpp
 
-file: mainB.cpp
-	g++ -std=c++14 -Wall -Werror -o file mainB.cpp MsgContainer.cpp MsgContainer.h FileIO.h FileIO.cpp -pthread
-
-server: main.cpp
-	g++ -std=c++14 -Wall -Werror -o server main.cpp MailServer.cpp MailServer.h MailState.cpp MailState.h MsgContainer.cpp MsgContainer.h FileIO.h FileIO.cpp -pthread
+twmailer_server: main_server.cpp
+	g++ -std=c++14 -Wall -Werror -Iinc -o twmailer_server main_server.cpp inc/MailServer.h src/MailServer.cpp inc/FileIO.h src/FileIO.cpp inc/MsgContainer.h src/MsgContainer.cpp
 
 clean:
-	rm client
-	rm file
-	rm server
-
+	rm -f twmailer_client
+	rm -f twmailer_server

@@ -1,5 +1,5 @@
-#ifndef MAILERVER_H
-#define MAILSERVER_H
+#ifndef __MAILSERVER_H
+#define __MAILSERVER_H
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -12,31 +12,39 @@
 #include <signal.h>
 #include <thread>
 #include <cstddef>
-#include "MailState.h"
 #include <iostream>
+#include <sstream>
+#include <string>
 #include <vector>
 
+#include "FileIO.h"
+
 #define BUF 1024
-#define PORT 6543
 #define MSGSIZE 11
 
 class MailServer
 {
 	private:
-	MailState mailState;
 	int create_socket = -1;
 	bool abortRequested = false;
 	socklen_t addrlen;
 	struct sockaddr_in address, cliaddress;
 	int new_socket = -1;
+    int port;
+    FileIO* fileIO;
+	void clientCommunication(int* parameterSocket);
+	void sendAnswer(int* socket, std::string);
+    std::vector<std::string> splitMsg(std::string);
 	
 	public:
 	MailServer();
-	bool start(int);
-	void listenForClients(std::string);
-	void abort();
-	void clientCommunication(int* parameterSocket, std::string);
-	void sendMailState(int* socket);
+    ~MailServer();
+    void setDir(std::string);
+    void setPort(int);
+	bool start();
+	void listenForClients();
+    void abort();
+	
 };
 
 #endif
